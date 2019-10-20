@@ -79,7 +79,7 @@ func compareInterest(personObjects: [Person]) {
         
         results.append(Results(compared: [mainPerson.name: secondaryPerson.name], rank: difference.count, differentInterests: difference, id1: mainPerson.id, id2: secondaryPerson.id))
         
-        print("Katie just compared: \(mainPerson.name) to \(secondaryPerson.name). Result: \(difference.count) different interests.")
+        print("Katie just compared: \(mainPerson.name), age: \(mainPerson.age), from: \(mainPerson.hometown) to \(secondaryPerson.name) age: \(secondaryPerson.age), from: \(secondaryPerson.hometown). Result: \(difference.count) different interests.")
     }
     
     orderResult()
