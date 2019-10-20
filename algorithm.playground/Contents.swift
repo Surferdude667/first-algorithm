@@ -21,7 +21,8 @@ var persons = [Person(name: "Jack Sparrow", hometown: "Caribbean", age: 42, inte
                Person(name: "Steve Jobs", hometown: "Silicon Vally", age: 52, interests: ["Tech": "Tehcnoligy", "Mercedes": "A car", "Apple": "Computer", "Kitesurfing": "A sport using a kite"], id: 2),
                Person(name: "Bruce Dickinson", hometown: "London", age: 55, interests: ["Music" : "Songs etc.", "Tech":"Tehcnoligy", "Football":"A stupid game"], id: 3),
                Person(name: "Petra Göransson", hometown: "Kungsäter", age: 22, interests: ["Fitness":"Going to the gym", "Music":"Songs etc.", "Tech":"Technoligy"], id: 4),
-               Person(name: "Jan Jørgensen", hometown: "Gjøl", age: 57, interests: ["Kitesrufing" : "A sport using a kite", "Guns":"A weapon"], id: 5)]
+               Person(name: "Jan Jørgensen", hometown: "Gjøl", age: 57, interests: ["Kitesrufing" : "A sport using a kite", "Guns":"A weapon"], id: 5),
+               Person(name: "Jan Jørgensen", hometown: "Gjøl", age: 57, interests: ["Kitesrufing" : "A sport using a kite", "Guns":"A weapon"], id: 6)]
 
 //  Takes the 'results' array and sorts it based on the 'rank' property in the 'Results' objects.
 //  Then prints the result and empties 'result' array. It also removes the two winning persons from the 'persons' array.
@@ -43,7 +44,9 @@ func orderResult() {
     results.removeAll()
     
     if persons.isEmpty {
-        print("Everyone is matched!")
+        print("\nEveryone is matched! Happy mingling :)")
+    } else if persons.count == 1 {
+        print("\nEveryone is matched! Except \(persons[0].name) due to an uneven numbers of participants... Happy mingling :)")
     } else {
         compareInterest(personObjects: persons)
     }
