@@ -60,9 +60,7 @@ func orderResult() {
 //  The function will add the result to the 'results' array as 'Result' objects.
 func compareInterest(personObjects: [Person]) {
     
-    var personCount = 0
-    
-    for _ in 0..<persons.count {
+    for personCount in 0..<persons.count {
         
         //  Loop through all the persons except the first person in the array to
         //  compare every person to the first person in array.
@@ -91,14 +89,9 @@ func compareInterest(personObjects: [Person]) {
                 
                 print("Katie just compared: \(mainPerson.name), age: \(mainPerson.age), from: \(mainPerson.hometown) to \(secondaryPerson.name) age: \(secondaryPerson.age), from: \(secondaryPerson.hometown). Result: \(difference.count) different interests.")
             }
-            
         }
-        
-        personCount = personCount + 1
     }
-    
     orderResult()
-    
 }
 
 compareInterest(personObjects: persons)
