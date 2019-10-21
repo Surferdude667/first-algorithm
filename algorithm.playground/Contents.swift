@@ -15,7 +15,7 @@ struct Results {
 }
 
 
-//  NOTE TO SELF: Fjerne match personerne fra resultatet og find næste match. Shuffel resultatet inden sortering.
+//  NOTE TO SELF: Fjerne match personerne fra resultatet og find næste match.
 var results = [Results]()
 
 var persons = [Person(name: "Jack Sparrow", hometown: "Caribbean", age: 42, interests: ["Rum": "An alcoholic drink", "Guns": "A weapon"], id: 10),
@@ -30,10 +30,11 @@ var persons = [Person(name: "Jack Sparrow", hometown: "Caribbean", age: 42, inte
 //  Then prints the result and empties 'result' array. It also removes the two winning persons from the 'persons' array.
 //  At last calls the 'compareInterest()' if there is still persons to compare.
 func orderResult() {
-    let sortedResult = results.sorted(by: {$0.rank > $1.rank})
-    let result = sortedResult[0]
+    let shuffeledResult = results.shuffled()
+    let sortedResult = shuffeledResult.sorted(by: {$0.rank > $1.rank})
+    let topMatch = sortedResult[0]
     
-    print("\nMATCH! \(result.compared.keys) and \(result.compared.values) have \(result.rank) different interrests! They are: \(result.differentInterests)\n")
+    print("\nMATCH! \(topMatch.compared.keys) and \(topMatch.compared.values) have \(topMatch.rank) different interrests! They are: \(topMatch.differentInterests)\n")
     
     if let index = persons.firstIndex(where: { $0.id == sortedResult[0].id1 }) {
         persons.remove(at: index)
