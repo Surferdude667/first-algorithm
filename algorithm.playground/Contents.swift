@@ -28,7 +28,8 @@ var persons = [Person(name: "Jack Sparrow",
                       interests: ["The Force": "The Force is a metaphysical and ubiquitous power",
                                   "Lightsabers": "A typical lightsaber is depicted as a luminescent blade of magnetically contained plasma",
                                   "Droids": "A droid is a robot possessing some degree of artificial intelligence",
-                                  "Piloting": "Piloting (on water) or pilotage (in the air) is navigating, using fixed points of reference on the sea or on land"],
+                                  "Piloting": "Piloting (on water) or pilotage (in the air) is navigating, using fixed points of reference on the sea or on land",
+                                  "Rum": "Rum is a distilled alcoholic drink"],
                       id: 11),
                Person(name: "Steve Jobs",
                       hometown: "Silicon Valley",
@@ -46,7 +47,9 @@ var persons = [Person(name: "Jack Sparrow",
                       interests: ["Music": "Music is an art form and cultural activity whose medium is sound organized in time.",
                                   "Piloting": "Piloting (on water) or pilotage (in the air) is navigating, using fixed points of reference on the sea or on land",
                                   "Rum": "Rum is a distilled alcoholic drink",
-                                  "Iron Maiden": "Iron Maiden are an English heavy metal band formed in Leyton, East London"],
+                                  "Iron Maiden": "Iron Maiden are an English heavy metal band formed in Leyton, East London",
+                                  "Champagne": " Many people use the term Champagne as a generic term for sparkling wine"],
+                      
                       id: 13),
                Person(name: "Bjørn Lau Jørgensen",
                       hometown: "Aalbrog",
@@ -62,9 +65,16 @@ var persons = [Person(name: "Jack Sparrow",
                       age: 32,
                       interests: ["Playboy lifestyle" : "A playboy lifestyle is the lifestyle of a wealthy man with ample time for leisure",
                                   "Piloting": "Piloting (on water) or pilotage (in the air) is navigating, using fixed points of reference on the sea or on land",
-                                  "Justice": "Justice, in its broadest context, includes both the attainment of that which is just and the philosophical discussion of that which is just.",
                                   "Skiing": "Skiing is a means of transport using skis to glide on snow."],
                       id: 15),
+               Person(name: "Bruce Wayne",
+               hometown: "Gotham City",
+               age: 32,
+               interests: ["Playboy lifestyle" : "A playboy lifestyle is the lifestyle of a wealthy man with ample time for leisure",
+                           "Piloting": "Piloting (on water) or pilotage (in the air) is navigating, using fixed points of reference on the sea or on land",
+                           "Justice": "Justice, in its broadest context, includes both the attainment of that which is just and the philosophical discussion of that which is just.",
+                           "Skiing": "Skiing is a means of transport using skis to glide on snow."],
+               id: 16),
                Person(name: "Darth Vader",
                       hometown: "Death Star",
                       age: 50,
@@ -72,7 +82,7 @@ var persons = [Person(name: "Jack Sparrow",
                                   "The Force": "The Force is a metaphysical and ubiquitous power",
                                   "Lightsabers": "A typical lightsaber is depicted as a luminescent blade of magnetically contained plasma",
                                   "Weapons of mass destruction": "A weapon of mass destruction (WMD) is a nuclear, radiological, chemical, biological, or any other weapon that can kill and bring significant harm"],
-                      id: 16),
+                      id: 17),
                Person(name: "Katy Perry",
                       hometown: "Los Angeles",
                       age: 34,
@@ -81,7 +91,16 @@ var persons = [Person(name: "Jack Sparrow",
                                   "Cosmetics": "Cosmetics are substances or products used to enhance or alter the appearance of the face or fragrance and texture of the body.",
                                   "Design": "A design is a plan or specification for the construction of an object or system",
                                   "Rum": "Rum is a distilled alcoholic drink"],
-                      id: 17)]
+                      id: 18),
+               Person(name: "Taylor swift",
+                      hometown: "Los Angeles",
+                      age: 34,
+                      interests: ["Music": "Music is an art form and cultural activity whose medium is sound organized in time.",
+                                  "Dogs": "The dog was the first species to be domesticated",
+                                  "Cosmetics": "Cosmetics are substances or products used to enhance or alter the appearance of the face or fragrance and texture of the body.",
+                                  "Design": "A design is a plan or specification for the construction of an object or system",
+                                  "Rum": "Rum is a distilled alcoholic drink"],
+                      id: 19)]
 
 
 //  Accepts an array of Results objects.
@@ -90,7 +109,7 @@ var persons = [Person(name: "Jack Sparrow",
 func orderResult(resultObjects: [Results]) {
     let shuffeledResult = resultObjects.shuffled()
     var sortedResult = shuffeledResult.sorted(by: {$0.rank > $1.rank})
-    
+        
     while sortedResult.isEmpty == false  {
         let topMatch = sortedResult[0]
         
@@ -98,6 +117,10 @@ func orderResult(resultObjects: [Results]) {
         sortedResult = updatedResults
         
         print("\nMATCH! Rank: \(topMatch.rank) -> \(topMatch.compared.keys) and \(topMatch.compared.values). The differences is: \(topMatch.differentInterests)")
+        
+        for i in 0..<sortedResult.count {
+            print("Rank: \(sortedResult[i].rank) Compared: \(sortedResult[i].compared)")
+        }
     }
 }
 
