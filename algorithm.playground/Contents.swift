@@ -4,6 +4,53 @@ struct Person {
     var age: Int
     var interests: [String: String] = [:]
     var id: Int //  Must be a unique Int.
+    
+    init(name: String, hometown: String, age: Int, interests: [String: String], id: Int) {
+        self.name = name
+        self.hometown = hometown
+        self.age = age
+        self.interests = interests
+        self.id = id
+    }
+    
+    
+    //  Accepts an array of Person objects.
+    //  Compares all persons interests agains each other.
+    //  Outputs the result as an array of Results obejcts.
+    static func compareInterest(personObjects: [Person]) -> [Results] {
+        var results = [Results]()
+        
+        for personCount in 0..<personObjects.count {
+            
+            for i in personCount..<personObjects.count {
+                
+                let mainPerson = personObjects[personCount]
+                let secondaryPerson = personObjects[i]
+                
+                var mainPersonInterests = Set<String>()
+                var secondaryPersonInterests = Set<String>()
+                
+                for elements in mainPerson.interests.keys {
+                    mainPersonInterests.insert(elements)
+                }
+                
+                for elements in secondaryPerson.interests.keys {
+                    secondaryPersonInterests.insert(elements)
+                }
+                
+                let commons = mainPersonInterests.intersection(secondaryPersonInterests)
+                let difference = mainPersonInterests.symmetricDifference(secondaryPersonInterests)
+                let combinedRank = difference.count - commons.count
+                
+                if mainPerson.id != secondaryPerson.id {
+                    results.append(Results(compared: [mainPerson.name: secondaryPerson.name], rank: combinedRank, differentInterests: difference, id1: mainPerson.id, id2: secondaryPerson.id))
+                    
+                    print("Katie just compared: \(mainPerson.name), age: \(mainPerson.age), from: \(mainPerson.hometown) to: -> \(secondaryPerson.name) age: \(secondaryPerson.age), from: \(secondaryPerson.hometown). Result: \(difference.count) different interests.")
+                }
+            }
+        }
+        return results
+    }
 }
 
 struct Results {
@@ -12,6 +59,28 @@ struct Results {
     var differentInterests = Set<String>()
     var id1: Int
     var id2: Int
+    
+    //  Accepts an array of Results objects.
+    //  Shuffels the result array then sorts based on the rank property.
+    //  Selects the top match and removes the two persons all places they appear in the result array.
+    static func orderResult(resultObjects: [Results]) {
+        let shuffeledResult = resultObjects.shuffled()
+        var sortedResult = shuffeledResult.sorted(by: {$0.rank > $1.rank})
+        
+        while sortedResult.isEmpty == false  {
+            let topMatch = sortedResult[0]
+            
+            let updatedResults = sortedResult.filter(){$0.id1 != topMatch.id1 && $0.id1 != topMatch.id2 && $0.id2 != topMatch.id1 && $0.id2 != topMatch.id2}
+            sortedResult = updatedResults
+            
+            print("\nMATCH! Rank: \(topMatch.rank) -> \(topMatch.compared.keys) and \(topMatch.compared.values). The differences is: \(topMatch.differentInterests)")
+            
+            //  DEMO PURPOSE ONLY
+//            for i in 0..<sortedResult.count {
+//                print("Rank: \(sortedResult[i].rank) Compared: \(sortedResult[i].compared)")
+//            }
+        }
+    }
 }
 
 var persons = [Person(name: "Jack Sparrow",
@@ -68,13 +137,13 @@ var persons = [Person(name: "Jack Sparrow",
                                   "Skiing": "Skiing is a means of transport using skis to glide on snow."],
                       id: 15),
                Person(name: "Bruce Wayne",
-               hometown: "Gotham City",
-               age: 32,
-               interests: ["Playboy lifestyle" : "A playboy lifestyle is the lifestyle of a wealthy man with ample time for leisure",
-                           "Piloting": "Piloting (on water) or pilotage (in the air) is navigating, using fixed points of reference on the sea or on land",
-                           "Justice": "Justice, in its broadest context, includes both the attainment of that which is just and the philosophical discussion of that which is just.",
-                           "Skiing": "Skiing is a means of transport using skis to glide on snow."],
-               id: 16),
+                      hometown: "Gotham City",
+                      age: 32,
+                      interests: ["Playboy lifestyle" : "A playboy lifestyle is the lifestyle of a wealthy man with ample time for leisure",
+                                  "Piloting": "Piloting (on water) or pilotage (in the air) is navigating, using fixed points of reference on the sea or on land",
+                                  "Justice": "Justice, in its broadest context, includes both the attainment of that which is just and the philosophical discussion of that which is just.",
+                                  "Skiing": "Skiing is a means of transport using skis to glide on snow."],
+                      id: 16),
                Person(name: "Darth Vader",
                       hometown: "Death Star",
                       age: 50,
@@ -103,63 +172,4 @@ var persons = [Person(name: "Jack Sparrow",
                       id: 19)]
 
 
-//  Accepts an array of Results objects.
-//  Shuffels the result array then sorts based on the rank property.
-//  Selects the top match and removes the two persons all places they appear in the result array.
-func orderResult(resultObjects: [Results]) {
-    let shuffeledResult = resultObjects.shuffled()
-    var sortedResult = shuffeledResult.sorted(by: {$0.rank > $1.rank})
-        
-    while sortedResult.isEmpty == false  {
-        let topMatch = sortedResult[0]
-        
-        let updatedResults = sortedResult.filter(){$0.id1 != topMatch.id1 && $0.id1 != topMatch.id2 && $0.id2 != topMatch.id1 && $0.id2 != topMatch.id2}
-        sortedResult = updatedResults
-        
-        print("\nMATCH! Rank: \(topMatch.rank) -> \(topMatch.compared.keys) and \(topMatch.compared.values). The differences is: \(topMatch.differentInterests)")
-        
-        for i in 0..<sortedResult.count {
-            print("Rank: \(sortedResult[i].rank) Compared: \(sortedResult[i].compared)")
-        }
-    }
-}
-
-//  Accepts an array of Person objects.
-//  Compares all persons interests agains each other.
-//  Outputs the result as an array of Results obejcts.
-func compareInterest(personObjects: [Person]) -> [Results] {
-    var results = [Results]()
-        
-        for personCount in 0..<persons.count {
-            
-            for i in personCount..<persons.count {
-                
-                let mainPerson = personObjects[personCount]
-                let secondaryPerson = personObjects[i]
-                
-                var mainPersonInterests = Set<String>()
-                var secondaryPersonInterests = Set<String>()
-                
-                for elements in mainPerson.interests.keys {
-                    mainPersonInterests.insert(elements)
-                }
-                
-                for elements in secondaryPerson.interests.keys {
-                    secondaryPersonInterests.insert(elements)
-                }
-                
-                let commons = mainPersonInterests.intersection(secondaryPersonInterests)
-                let difference = mainPersonInterests.symmetricDifference(secondaryPersonInterests)
-                let combinedRank = difference.count - commons.count
-                
-                if mainPerson.id != secondaryPerson.id {
-                    results.append(Results(compared: [mainPerson.name: secondaryPerson.name], rank: combinedRank, differentInterests: difference, id1: mainPerson.id, id2: secondaryPerson.id))
-                    
-                    print("Katie just compared: \(mainPerson.name), age: \(mainPerson.age), from: \(mainPerson.hometown) to: -> \(secondaryPerson.name) age: \(secondaryPerson.age), from: \(secondaryPerson.hometown). Result: \(difference.count) different interests.")
-                }
-            }
-        }
-    return results
-}
-
-orderResult(resultObjects: compareInterest(personObjects: persons))
+Results.orderResult(resultObjects: Person.compareInterest(personObjects: persons))
