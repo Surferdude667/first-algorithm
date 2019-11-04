@@ -1,4 +1,4 @@
-struct Person {
+class Person {
     var name: String
     var hometown: String
     var age: Int
@@ -45,6 +45,7 @@ struct Person {
                 if mainPerson.id != secondaryPerson.id {
                     results.append(Results(compared: [mainPerson.name: secondaryPerson.name], rank: combinedRank, differentInterests: difference, id1: mainPerson.id, id2: secondaryPerson.id))
                     
+                    //  DEMO PURPOSE ONLY
                     print("Katie just compared: \(mainPerson.name), age: \(mainPerson.age), from: \(mainPerson.hometown) to: -> \(secondaryPerson.name) age: \(secondaryPerson.age), from: \(secondaryPerson.hometown). Result: \(difference.count) different interests.")
                 }
             }
@@ -74,15 +75,11 @@ struct Results {
             sortedResult = updatedResults
             
             print("\nMATCH! Rank: \(topMatch.rank) -> \(topMatch.compared.keys) and \(topMatch.compared.values). The differences is: \(topMatch.differentInterests)")
-            
-            //  DEMO PURPOSE ONLY
-//            for i in 0..<sortedResult.count {
-//                print("Rank: \(sortedResult[i].rank) Compared: \(sortedResult[i].compared)")
-//            }
         }
     }
 }
 
+//  Data model
 var persons = [Person(name: "Jack Sparrow",
                       hometown: "Caribbean",
                       age: 42,
